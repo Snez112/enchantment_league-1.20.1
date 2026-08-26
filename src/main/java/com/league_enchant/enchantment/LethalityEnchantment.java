@@ -1,5 +1,6 @@
 package com.league_enchant.enchantment;
 
+import com.league_enchant.config.ModConfig;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
@@ -25,7 +26,7 @@ public class LethalityEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return ModConfig.INSTANCE.lethality.max_level;
     }
 
     @Override
@@ -41,9 +42,10 @@ public class LethalityEnchantment extends Enchantment {
     @Override
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
         if (!user.getWorld().isClient() && target instanceof LivingEntity livingTarget) {
-            float bonusDamage = level * 1.5f;
+            ModConfig.LethalityConfig config = ModConfig.INSTANCE.lethality;
+            float bonusDamage = level * config.base_bonus_damage_per_level;
             if (livingTarget.getArmor() > 0) {
-                bonusDamage += Math.min(livingTarget.getArmor() * 0.2f * level, 6.0f);
+                bonusDamage += Math.min(livingTarget.getArmor() * config.armor_scaling_per_level * level, config.max_armor_damage_cap);
             }
             DamageSource source = user.getDamageSources().magic();
             livingTarget.damage(source, bonusDamage);

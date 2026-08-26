@@ -1,8 +1,14 @@
 {
   "enchantment.league_enchantment.vampiric": "Vampirism",
-  "enchantment.league_enchantment.vampiric.desc": "Restores 5% of damage dealt as health per level.",
+  "enchantment.league_enchantment.vampiric.desc": "Restores 5% of damage dealt as health( +5% per level).",
   "enchantment.league_enchantment.lethality": "Lethality",
   "enchantment.league_enchantment.lethality.desc": "Deals bonus magic damage bypassing enemy armor.",
   "enchantment.league_enchantment.infinity_aspect": "Aspect of Infinity",
-  "enchantment.league_enchantment.infinity_aspect.desc": "Empowers attack damage by +2.5 per level."
+  "enchantment.league_enchantment.infinity_aspect.desc": "Increases critical hit damage by +20%(+10% per level)",
+  "enchantment.league_enchantment.aegis": "Aegis",
+  "enchantment.league_enchantment.aegis.desc": "Reduces max health, grants bonus armor, and deals extra damage based on armor.",
+  "enchantment.league_enchantment.juggernaut": "Juggernaut",
+  "enchantment.league_enchantment.juggernaut.desc": "Increases max health, reduces armor, and deals extra damage based on max health.",
+  "enchantment.league_enchantment.spell_vamp": "Spell Vamp",
+  "enchantment.league_enchantment.spell_vamp.desc": "Restores 5% of magic damage dealt as health (+5% per level)."
 }

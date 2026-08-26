@@ -1,5 +1,6 @@
 package com.league_enchant.event;
 
+import com.league_enchant.config.ModConfig;
 import com.league_enchant.registry.ModEnchantments;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,7 +17,7 @@ public class VampiricEventHandler {
         if (damageTaken <= 0 || enchantmentLevel <= 0) {
             return 0.0f;
         }
-        float lifestealPercent = enchantmentLevel * 0.05f;
+        float lifestealPercent = enchantmentLevel * ModConfig.INSTANCE.vampiric.lifesteal_per_level;
         return damageTaken * lifestealPercent;
     }
 

@@ -1,5 +1,7 @@
 package com.league_enchant.enchantment;
 
+import com.league_enchant.config.ModConfig;
+import com.league_enchant.registry.ModEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -22,7 +24,7 @@ public class VampiricEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return ModConfig.INSTANCE.vampiric.max_level;
     }
 
     @Override
@@ -33,5 +35,10 @@ public class VampiricEnchantment extends Enchantment {
     @Override
     public boolean isAvailableForEnchantedBookOffer() {
         return false;
+    }
+
+    @Override
+    protected boolean canAccept(Enchantment other) {
+        return super.canAccept(other) && other != ModEnchantments.SPELL_VAMP;
     }
 }

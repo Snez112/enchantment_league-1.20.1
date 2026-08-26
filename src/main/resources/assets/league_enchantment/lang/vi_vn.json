@@ -1,8 +1,14 @@
 {
   "enchantment.league_enchantment.vampiric": "Hút Máu",
-  "enchantment.league_enchantment.vampiric.desc": "Hồi lại 5% sát thương thực tế gây ra thành máu mỗi cấp độ.",
+  "enchantment.league_enchantment.vampiric.desc": "Hồi lại 5% sát thương thực tế gây ra thành máu ( +5% mỗi cấp độ).",
   "enchantment.league_enchantment.lethality": "Sát Lực",
   "enchantment.league_enchantment.lethality.desc": "Gây thêm sát thương phép xuyên qua điểm giáp của kẻ địch.",
   "enchantment.league_enchantment.infinity_aspect": "Bản Thể Vô Cực",
-  "enchantment.league_enchantment.infinity_aspect.desc": "Tăng thêm +2.5 sát thương đòn đánh mỗi cấp độ."
+  "enchantment.league_enchantment.infinity_aspect.desc": "Tăng thêm +20%(+10% mỗi cấp độ) sát thương khi đánh chí mạng.",
+  "enchantment.league_enchantment.aegis": "Pháo Đài Di Động",
+  "enchantment.league_enchantment.aegis.desc": "Giảm máu tối đa, tăng điểm giáp và gây thêm sát thương dựa trên tổng điểm giáp.",
+  "enchantment.league_enchantment.juggernaut": "Đấu Sĩ",
+  "enchantment.league_enchantment.juggernaut.desc": "Tăng máu tối đa, giảm điểm giáp và gây thêm sát thương dựa trên lượng máu tối đa.",
+  "enchantment.league_enchantment.spell_vamp": "Hút Máu Phép",
+  "enchantment.league_enchantment.spell_vamp.desc": "Hồi lại 5% sát thương phép/phép thuật gây ra thành máu (+5% mỗi cấp độ)."
 }

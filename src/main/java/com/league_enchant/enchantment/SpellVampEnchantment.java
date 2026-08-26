@@ -1,20 +1,19 @@
 package com.league_enchant.enchantment;
 
 import com.league_enchant.config.ModConfig;
+import com.league_enchant.registry.ModEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EquipmentSlot;
 
-public class InfinityAspectEnchantment extends Enchantment {
-    public InfinityAspectEnchantment() {
+public class SpellVampEnchantment extends Enchantment {
+    public SpellVampEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
     public int getMinPower(int level) {
-        // Ultra-high Eterna requirement for Zenith Enchanting Table (starts at 50)
-        return 50 + (level - 1) * 15;
+        return 35 + (level - 1) * 12;
     }
 
     @Override
@@ -24,7 +23,7 @@ public class InfinityAspectEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return ModConfig.INSTANCE.infinity_aspect.max_level;
+        return ModConfig.INSTANCE.spell_vamp.max_level;
     }
 
     @Override
@@ -38,7 +37,7 @@ public class InfinityAspectEnchantment extends Enchantment {
     }
 
     @Override
-    public float getAttackDamage(int level, EntityGroup group) {
-        return 0.0f;
+    protected boolean canAccept(Enchantment other) {
+        return super.canAccept(other) && other != ModEnchantments.VAMPIRIC;
     }
 }
