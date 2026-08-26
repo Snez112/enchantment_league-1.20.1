@@ -1,0 +1,8 @@
+{
+  "enchantment.league_enchantment.vampiric": "Vampirism",
+  "enchantment.league_enchantment.vampiric.desc": "Restores 5% of damage dealt as health per level.",
+  "enchantment.league_enchantment.lethality": "Lethality",
+  "enchantment.league_enchantment.lethality.desc": "Deals bonus magic damage bypassing enemy armor.",
+  "enchantment.league_enchantment.infinity_aspect": "Aspect of Infinity",
+  "enchantment.league_enchantment.infinity_aspect.desc": "Empowers attack damage by +2.5 per level."
+}
