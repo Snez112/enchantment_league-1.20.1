@@ -1,0 +1,22 @@
+{
+    "replace":  false,
+    "values":  [
+                   "league_enchantment:wimpy_spell_book",
+                   "league_enchantment:copper_spell_book",
+                   "league_enchantment:iron_spell_book",
+                   "league_enchantment:gold_spell_book",
+                   "league_enchantment:diamond_spell_book",
+                   "league_enchantment:netherite_spell_book",
+                   "league_enchantment:legendary_spell_book",
+                   "league_enchantment:rotten_spell_book",
+                   "league_enchantment:blaze_spell_book",
+                   "league_enchantment:dragonskin_spell_book",
+                   "league_enchantment:druidic_spell_book",
+                   "league_enchantment:villager_spell_book",
+                   "league_enchantment:ice_spell_book",
+                   "league_enchantment:evoker_spell_book",
+                   "league_enchantment:necronomicon_spell_book",
+                   "league_enchantment:cursed_doll_spell_book",
+                   "league_enchantment:spellbook"
+               ]
+}

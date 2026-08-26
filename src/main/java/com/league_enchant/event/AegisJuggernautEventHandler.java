@@ -3,6 +3,7 @@ package com.league_enchant.event;
 import com.league_enchant.config.ModConfig;
 import com.league_enchant.registry.ModEnchantments;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -10,8 +11,9 @@ import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.UUID;
 
@@ -22,9 +24,20 @@ public class AegisJuggernautEventHandler {
     private static final UUID JUGGERNAUT_ARMOR_UUID = UUID.fromString("4a091410-d003-4b92-8086-13d85449df54");
 
     private static final ThreadLocal<Boolean> IS_PROCESSING = ThreadLocal.withInitial(() -> false);
+    private static int tickCounter = 0;
 
     public static void register() {
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(AegisJuggernautEventHandler::onAllowDamage);
+        ServerTickEvents.END_SERVER_TICK.register(AegisJuggernautEventHandler::onServerTick);
+    }
+
+    private static void onServerTick(MinecraftServer server) {
+        tickCounter++;
+        if (tickCounter % 10 == 0) {
+            for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                updatePlayerAttributes(player);
+            }
+        }
     }
 
     public static float calculateAegisBonusDamage(float totalArmor, int level, float ratioPerLevel) {
@@ -64,44 +77,82 @@ public class AegisJuggernautEventHandler {
         EntityAttributeInstance armorInstance = entity.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
 
         if (healthInstance != null) {
-            healthInstance.removeModifier(AEGIS_HEALTH_UUID);
-            healthInstance.removeModifier(JUGGERNAUT_HEALTH_UUID);
+            EntityAttributeModifier oldAegisHp = healthInstance.getModifier(AEGIS_HEALTH_UUID);
+            EntityAttributeModifier oldJuggHp = healthInstance.getModifier(JUGGERNAUT_HEALTH_UUID);
 
-            if (aegisLevel > 0) {
-                float hpReduction = aegisLevel * ModConfig.INSTANCE.aegis.hp_reduction_per_level;
-                healthInstance.addTemporaryModifier(new EntityAttributeModifier(
-                    AEGIS_HEALTH_UUID, "Aegis HP Reduction", -hpReduction, EntityAttributeModifier.Operation.ADDITION
-                ));
+            float targetAegisHpReduction = aegisLevel > 0 ? aegisLevel * ModConfig.INSTANCE.aegis.hp_reduction_per_level : 0.0f;
+            float targetJuggHpBonus = juggernautLevel > 0 ? juggernautLevel * ModConfig.INSTANCE.juggernaut.hp_bonus_per_level : 0.0f;
+
+            boolean needHealthUpdate = false;
+            if (oldAegisHp == null && aegisLevel > 0) {
+                needHealthUpdate = true;
+            } else if (oldAegisHp != null && (aegisLevel == 0 || Math.abs(oldAegisHp.getValue() - (-targetAegisHpReduction)) > 0.001)) {
+                needHealthUpdate = true;
             }
 
-            if (juggernautLevel > 0) {
-                float hpBonus = juggernautLevel * ModConfig.INSTANCE.juggernaut.hp_bonus_per_level;
-                healthInstance.addTemporaryModifier(new EntityAttributeModifier(
-                    JUGGERNAUT_HEALTH_UUID, "Juggernaut HP Bonus", hpBonus, EntityAttributeModifier.Operation.ADDITION
-                ));
+            if (oldJuggHp == null && juggernautLevel > 0) {
+                needHealthUpdate = true;
+            } else if (oldJuggHp != null && (juggernautLevel == 0 || Math.abs(oldJuggHp.getValue() - targetJuggHpBonus) > 0.001)) {
+                needHealthUpdate = true;
             }
 
-            if (entity.getHealth() > entity.getMaxHealth()) {
-                entity.setHealth(entity.getMaxHealth());
+            if (needHealthUpdate) {
+                healthInstance.removeModifier(AEGIS_HEALTH_UUID);
+                healthInstance.removeModifier(JUGGERNAUT_HEALTH_UUID);
+
+                if (aegisLevel > 0) {
+                    healthInstance.addTemporaryModifier(new EntityAttributeModifier(
+                        AEGIS_HEALTH_UUID, "Aegis HP Reduction", -targetAegisHpReduction, EntityAttributeModifier.Operation.ADDITION
+                    ));
+                }
+
+                if (juggernautLevel > 0) {
+                    healthInstance.addTemporaryModifier(new EntityAttributeModifier(
+                        JUGGERNAUT_HEALTH_UUID, "Juggernaut HP Bonus", targetJuggHpBonus, EntityAttributeModifier.Operation.ADDITION
+                    ));
+                }
+
+                if (entity.getHealth() > entity.getMaxHealth()) {
+                    entity.setHealth(entity.getMaxHealth());
+                }
             }
         }
 
         if (armorInstance != null) {
-            armorInstance.removeModifier(AEGIS_ARMOR_UUID);
-            armorInstance.removeModifier(JUGGERNAUT_ARMOR_UUID);
+            EntityAttributeModifier oldAegisArmor = armorInstance.getModifier(AEGIS_ARMOR_UUID);
+            EntityAttributeModifier oldJuggArmor = armorInstance.getModifier(JUGGERNAUT_ARMOR_UUID);
 
-            if (aegisLevel > 0) {
-                float armorBonus = aegisLevel * ModConfig.INSTANCE.aegis.armor_bonus_per_level;
-                armorInstance.addTemporaryModifier(new EntityAttributeModifier(
-                    AEGIS_ARMOR_UUID, "Aegis Armor Bonus", armorBonus, EntityAttributeModifier.Operation.ADDITION
-                ));
+            float targetAegisArmorBonus = aegisLevel > 0 ? aegisLevel * ModConfig.INSTANCE.aegis.armor_bonus_per_level : 0.0f;
+            float targetJuggArmorReduction = juggernautLevel > 0 ? juggernautLevel * ModConfig.INSTANCE.juggernaut.armor_reduction_per_level : 0.0f;
+
+            boolean needArmorUpdate = false;
+            if (oldAegisArmor == null && aegisLevel > 0) {
+                needArmorUpdate = true;
+            } else if (oldAegisArmor != null && (aegisLevel == 0 || Math.abs(oldAegisArmor.getValue() - targetAegisArmorBonus) > 0.001)) {
+                needArmorUpdate = true;
             }
 
-            if (juggernautLevel > 0) {
-                float armorReduction = juggernautLevel * ModConfig.INSTANCE.juggernaut.armor_reduction_per_level;
-                armorInstance.addTemporaryModifier(new EntityAttributeModifier(
-                    JUGGERNAUT_ARMOR_UUID, "Juggernaut Armor Reduction", -armorReduction, EntityAttributeModifier.Operation.ADDITION
-                ));
+            if (oldJuggArmor == null && juggernautLevel > 0) {
+                needArmorUpdate = true;
+            } else if (oldJuggArmor != null && (juggernautLevel == 0 || Math.abs(oldJuggArmor.getValue() - (-targetJuggArmorReduction)) > 0.001)) {
+                needArmorUpdate = true;
+            }
+
+            if (needArmorUpdate) {
+                armorInstance.removeModifier(AEGIS_ARMOR_UUID);
+                armorInstance.removeModifier(JUGGERNAUT_ARMOR_UUID);
+
+                if (aegisLevel > 0) {
+                    armorInstance.addTemporaryModifier(new EntityAttributeModifier(
+                        AEGIS_ARMOR_UUID, "Aegis Armor Bonus", targetAegisArmorBonus, EntityAttributeModifier.Operation.ADDITION
+                    ));
+                }
+
+                if (juggernautLevel > 0) {
+                    armorInstance.addTemporaryModifier(new EntityAttributeModifier(
+                        JUGGERNAUT_ARMOR_UUID, "Juggernaut Armor Reduction", -targetJuggArmorReduction, EntityAttributeModifier.Operation.ADDITION
+                    ));
+                }
             }
         }
     }
@@ -112,7 +163,6 @@ public class AegisJuggernautEventHandler {
         }
 
         if (source.getAttacker() instanceof LivingEntity attacker) {
-            // Update equipment attributes dynamically
             updatePlayerAttributes(attacker);
             updatePlayerAttributes(entity);
 
