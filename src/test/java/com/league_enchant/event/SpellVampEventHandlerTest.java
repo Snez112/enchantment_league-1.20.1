@@ -7,16 +7,16 @@ public class SpellVampEventHandlerTest {
 
     @Test
     public void testCalculateHealAmountLevel1() {
-        // 20 magic damage, level 1, 0.05 per level = 20 * 0.05 = 1.0
-        float heal = SpellVampEventHandler.calculateHealAmount(20.0f, 1, 0.05f);
-        assertEquals(1.0f, heal, 0.0001f);
+        // 20 magic damage, level 1, 0.01 per level = 20 * 0.01 = 0.2
+        float heal = SpellVampEventHandler.calculateHealAmount(20.0f, 1, 0.01f);
+        assertEquals(0.2f, heal, 0.0001f);
     }
 
     @Test
     public void testCalculateHealAmountLevel5() {
-        // 40 magic damage, level 5, 0.05 per level = 40 * 0.25 = 10.0
-        float heal = SpellVampEventHandler.calculateHealAmount(40.0f, 5, 0.05f);
-        assertEquals(10.0f, heal, 0.0001f);
+        // 40 magic damage, level 5, 0.01 per level = 40 * 0.05 = 2.0
+        float heal = SpellVampEventHandler.calculateHealAmount(40.0f, 5, 0.01f);
+        assertEquals(2.0f, heal, 0.0001f);
     }
 
     @Test

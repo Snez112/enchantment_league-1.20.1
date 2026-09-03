@@ -4,6 +4,7 @@ import com.league_enchant.config.ModConfig;
 import com.league_enchant.registry.ModEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
+import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.EquipmentSlot;
 
 public class JuggernautEnchantment extends Enchantment {
@@ -40,6 +41,9 @@ public class JuggernautEnchantment extends Enchantment {
 
     @Override
     protected boolean canAccept(Enchantment other) {
-        return super.canAccept(other) && other != ModEnchantments.AEGIS;
+        return super.canAccept(other) 
+            && !(other instanceof AegisEnchantment)
+            && other != ModEnchantments.AEGIS 
+            && !(other instanceof ProtectionEnchantment);
     }
 }

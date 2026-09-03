@@ -18,21 +18,32 @@ public class ModConfigTest {
         assertFalse(config.loot.enable_ancient_city_loot);
 
         // Vampiric defaults
-        assertEquals(0.05f, config.vampiric.lifesteal_per_level, 0.0001f);
+        assertEquals(0.01f, config.vampiric.lifesteal_per_level, 0.0001f);
         assertEquals(5, config.vampiric.max_level);
 
-        // Lethality defaults
-        assertEquals(1.5f, config.lethality.base_bonus_damage_per_level, 0.0001f);
-        assertEquals(0.2f, config.lethality.armor_scaling_per_level, 0.0001f);
-        assertEquals(6.0f, config.lethality.max_armor_damage_cap, 0.0001f);
-        assertEquals(3, config.lethality.max_level);
+        // Spell Vamp defaults
+        assertEquals(0.01f, config.spell_vamp.spell_lifesteal_per_level, 0.0001f);
+        assertEquals(5, config.spell_vamp.max_level);
 
-        // Infinity Aspect defaults
-        assertEquals(0.20f, config.infinity_aspect.crit_bonus_level_1, 0.0001f);
-        assertEquals(0.30f, config.infinity_aspect.crit_bonus_level_2, 0.0001f);
-        assertEquals(0.40f, config.infinity_aspect.crit_bonus_level_3, 0.0001f);
-        assertEquals(0.50f, config.infinity_aspect.crit_bonus_level_4, 0.0001f);
-        assertEquals(4, config.infinity_aspect.max_level);
+        // Aegis defaults
+        assertEquals(0.05f, config.aegis.hp_reduction_base, 0.0001f);
+        assertEquals(0.01f, config.aegis.hp_reduction_per_level, 0.0001f);
+        assertEquals(5.0f, config.aegis.armor_bonus_base, 0.0001f);
+        assertEquals(2.0f, config.aegis.armor_bonus_per_level, 0.0001f);
+        assertEquals(2.0f, config.aegis.armor_toughness_base, 0.0001f);
+        assertEquals(1.0f, config.aegis.armor_toughness_per_level, 0.0001f);
+        assertEquals(0.90f, config.aegis.max_damage_reduction, 0.0001f);
+        assertEquals(4, config.aegis.max_level);
+
+        // Juggernaut defaults
+        assertEquals(0.06f, config.juggernaut.hp_bonus_base, 0.0001f);
+        assertEquals(0.015f, config.juggernaut.hp_bonus_per_level, 0.0001f);
+        assertEquals(0.06f, config.juggernaut.armor_reduction_base, 0.0001f);
+        assertEquals(0.01f, config.juggernaut.armor_reduction_per_level, 0.0001f);
+        assertEquals(0.06f, config.juggernaut.armor_toughness_reduction_base, 0.0001f);
+        assertEquals(0.01f, config.juggernaut.armor_toughness_reduction_per_level, 0.0001f);
+        assertEquals(0.05f, config.juggernaut.hp_to_damage_ratio, 0.0001f);
+        assertEquals(4, config.juggernaut.max_level);
     }
 
     @Test

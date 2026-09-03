@@ -1,10 +1,9 @@
 package com.league_enchant;
 
 import com.league_enchant.config.ModConfig;
-import com.league_enchant.event.AegisJuggernautEventHandler;
-import com.league_enchant.event.AttributeSyncHandler;
+import com.league_enchant.event.AegisEventHandler;
 import com.league_enchant.event.EndLootTableHandler;
-import com.league_enchant.event.InfinityAspectEventHandler;
+import com.league_enchant.event.JuggernautEventHandler;
 import com.league_enchant.event.SpellVampEventHandler;
 import com.league_enchant.event.VampiricEventHandler;
 import com.league_enchant.magic.MagicAttributes;
@@ -38,11 +37,8 @@ public class LeagueEnchantment implements ModInitializer {
         SpellRegistry.registerSpells();
         VampiricEventHandler.register();
         SpellVampEventHandler.register();
-        InfinityAspectEventHandler.register();
-        AegisJuggernautEventHandler.register();
-        AttributeSyncHandler.register();
-        ServerMagicEventHandler.register();
-        com.league_enchant.network.ModPackets.registerC2SPackets();
+        AegisEventHandler.register();
+        JuggernautEventHandler.register();
         EndLootTableHandler.register();
     }
 }

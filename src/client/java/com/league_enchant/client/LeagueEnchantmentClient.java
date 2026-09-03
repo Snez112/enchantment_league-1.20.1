@@ -36,11 +36,14 @@ public class LeagueEnchantmentClient implements ClientModInitializer {
             if (enchantments.containsKey(ModEnchantments.VAMPIRIC)) {
                 lines.add(Text.translatable("enchantment.league_enchantment.vampiric.desc").formatted(Formatting.GRAY));
             }
-            if (enchantments.containsKey(ModEnchantments.LETHALITY)) {
-                lines.add(Text.translatable("enchantment.league_enchantment.lethality.desc").formatted(Formatting.GRAY));
+            if (enchantments.containsKey(ModEnchantments.SPELL_VAMP)) {
+                lines.add(Text.translatable("enchantment.league_enchantment.spell_vamp.desc").formatted(Formatting.GRAY));
             }
-            if (enchantments.containsKey(ModEnchantments.INFINITY_ASPECT)) {
-                lines.add(Text.translatable("enchantment.league_enchantment.infinity_aspect.desc").formatted(Formatting.GRAY));
+            if (enchantments.containsKey(ModEnchantments.AEGIS)) {
+                lines.add(Text.translatable("enchantment.league_enchantment.aegis.desc").formatted(Formatting.GRAY));
+            }
+            if (enchantments.containsKey(ModEnchantments.JUGGERNAUT)) {
+                lines.add(Text.translatable("enchantment.league_enchantment.juggernaut.desc").formatted(Formatting.GRAY));
             }
         });
     }

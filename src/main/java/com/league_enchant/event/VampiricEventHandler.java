@@ -21,8 +21,15 @@ public class VampiricEventHandler {
         return damageTaken * lifestealPercent;
     }
 
+    public static boolean isPhysicalDamage(DamageSource source) {
+        if (source == null) {
+            return false;
+        }
+        return !SpellVampEventHandler.isMagicOrSpellDamage(source);
+    }
+
     private static boolean onAllowDamage(LivingEntity entity, DamageSource source, float amount) {
-        if (amount > 0 && source.getAttacker() instanceof LivingEntity attacker) {
+        if (amount > 0 && isPhysicalDamage(source) && source.getAttacker() instanceof LivingEntity attacker) {
             int level = EnchantmentHelper.getLevel(ModEnchantments.VAMPIRIC, attacker.getMainHandStack());
             if (level > 0) {
                 float healAmount = calculateHealAmount(amount, level);

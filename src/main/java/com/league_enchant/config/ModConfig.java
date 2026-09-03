@@ -17,8 +17,6 @@ public class ModConfig {
 
     public LootConfig loot = new LootConfig();
     public VampiricConfig vampiric = new VampiricConfig();
-    public LethalityConfig lethality = new LethalityConfig();
-    public InfinityAspectConfig infinity_aspect = new InfinityAspectConfig();
 
     public AegisConfig aegis = new AegisConfig();
     public JuggernautConfig juggernaut = new JuggernautConfig();
@@ -36,41 +34,35 @@ public class ModConfig {
     }
 
     public static class VampiricConfig {
-        public float lifesteal_per_level = 0.05f;
+        public float lifesteal_per_level = 0.01f;
         public int max_level = 5;
     }
 
     public static class SpellVampConfig {
-        public float spell_lifesteal_per_level = 0.05f;
+        public float spell_lifesteal_per_level = 0.01f;
         public int max_level = 5;
     }
 
-    public static class LethalityConfig {
-        public float base_bonus_damage_per_level = 1.5f;
-        public float armor_scaling_per_level = 0.2f;
-        public float max_armor_damage_cap = 6.0f;
-        public int max_level = 3;
-    }
-
-    public static class InfinityAspectConfig {
-        public float crit_bonus_level_1 = 0.20f;
-        public float crit_bonus_level_2 = 0.30f;
-        public float crit_bonus_level_3 = 0.40f;
-        public float crit_bonus_level_4 = 0.50f;
-        public int max_level = 4;
-    }
-
     public static class AegisConfig {
-        public float hp_reduction_per_level = 2.0f;
-        public float armor_bonus_per_level = 3.0f;
+        public float hp_reduction_base = 0.05f;
+        public float hp_reduction_per_level = 0.01f;
+        public float armor_bonus_base = 5.0f;
+        public float armor_bonus_per_level = 2.0f;
+        public float armor_toughness_base = 2.0f;
+        public float armor_toughness_per_level = 1.0f;
         public float armor_to_damage_ratio_per_level = 0.10f;
+        public float max_damage_reduction = 0.90f;
         public int max_level = 4;
     }
 
     public static class JuggernautConfig {
-        public float hp_bonus_per_level = 4.0f;
-        public float armor_reduction_per_level = 2.0f;
-        public float hp_to_damage_ratio_per_level = 0.05f;
+        public float hp_bonus_base = 0.06f;
+        public float hp_bonus_per_level = 0.015f;
+        public float armor_reduction_base = 0.06f;
+        public float armor_reduction_per_level = 0.01f;
+        public float armor_toughness_reduction_base = 0.06f;
+        public float armor_toughness_reduction_per_level = 0.01f;
+        public float hp_to_damage_ratio = 0.05f;
         public int max_level = 4;
     }
 
